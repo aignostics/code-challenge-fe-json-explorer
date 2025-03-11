@@ -46,6 +46,7 @@ The starter template includes:
 - Completeness of the implementation
 - Code readability and maintainability
 - UI/UX considerations
+- Comit messages
 
 ## Stretch Goals (If Time Permits)
 
