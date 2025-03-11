@@ -26,7 +26,7 @@ Create an interactive JSON explorer that allows users to navigate through a JSON
 The starter template includes:
 
 - `src/App.tsx` - Main application component
-- `src/data/sampleData.ts` - Sample JSON data to visualize
+- `src/assets/data/sampleData.ts` - Sample JSON data to visualize
 - `src/types/index.ts` - TypeScript type definitions
 - `src/components/JsonExplorer.tsx` - Main explorer component (partially implemented)
 - `src/components/JsonTreeNode.tsx` - Tree node component (needs implementation)
