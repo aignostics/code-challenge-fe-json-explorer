@@ -47,4 +47,13 @@ The starter template includes:
 - Add a JSON validity checker
 - Allow collapsing all/expanding all functionality
 
+## Evaluation Criteria
+
+- Code organization and component structure
+- TypeScript usage and type safety
+- Completeness of the implementation
+- Code readability and maintainability
+- UI/UX considerations
+- Commit messages
+
 Good luck!
