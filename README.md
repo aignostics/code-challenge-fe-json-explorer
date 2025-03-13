@@ -39,14 +39,6 @@ The starter template includes:
 3. Finally, add the path tracking and node selection features
 4. Use the provided CSS classes for styling different data types
 
-## Evaluation Criteria
-
-- Code organization and component structure
-- TypeScript usage and type safety
-- Completeness of the implementation
-- Code readability and maintainability
-- UI/UX considerations
-- Comit messages
 
 ## Stretch Goals (If Time Permits)
 
