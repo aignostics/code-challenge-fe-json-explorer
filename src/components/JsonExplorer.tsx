@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { JsonValue } from '../types';
-import JsonTreeNode from './JsonTreeNode';
+import { useState } from "react";
+import { JsonValue } from "../types";
+import JsonTreeNode from "./JsonTreeNode";
 
 interface JsonExplorerProps {
   data: JsonValue;
@@ -19,8 +19,8 @@ const JsonExplorer: React.FC<JsonExplorerProps> = ({ data }) => {
 
   // Helper to safely display values as strings
   const displayValue = (value: JsonValue | null): string => {
-    if (value === null) return 'null';
-    if (typeof value === 'object') {
+    if (value === null) return "null";
+    if (typeof value === "object") {
       return JSON.stringify(value, null, 2);
     }
     return String(value);
@@ -51,8 +51,8 @@ const JsonExplorer: React.FC<JsonExplorerProps> = ({ data }) => {
               </p>
             </div>
             {selectedValue !== undefined &&
-              selectedType !== 'object' &&
-              selectedType !== 'array' && (
+              selectedType !== "object" &&
+              selectedType !== "array" && (
                 <div className="value-display">
                   <pre>{displayValue(selectedValue)}</pre>
                 </div>

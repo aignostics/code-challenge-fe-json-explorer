@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { JsonValue } from '../types';
+import { ReactNode, useState } from "react";
+import { JsonValue } from "../types";
 
 interface JsonTreeNodeProps {
   data: JsonValue;
@@ -18,16 +18,49 @@ const JsonTreeNode: React.FC<JsonTreeNodeProps> = ({
 
   // Determine the type of the data
   const getType = (value: JsonValue): string => {
-    if (value === null) return 'null';
-    if (Array.isArray(value)) return 'array';
+    if (value === null) return "null";
+    if (Array.isArray(value)) return "array";
     return typeof value;
   };
 
   const type = getType(data);
 
+  let content: ReactNode = <></>;
+
+  switch (type) {
+    case "null":
+      content = <div>Null</div>;
+      break;
+    case "array":
+      content = <div>Array</div>;
+      break;
+
+    case "object":
+      {
+        const dataObject = data as { [key: string]: JsonValue };
+
+        content = (
+          <>
+            {Object.keys(dataObject).map((key) => (
+              <JsonTreeNode
+                data={dataObject[key] || null}
+                name={key}
+                path={`${path}/${key}`}
+                key={key}
+                onNodeClick={onNodeClick}
+              />
+            ))}
+          </>
+        );
+      }
+      break;
+    default:
+      content = <>{data}</>;
+  }
+
   // Toggle expand/collapse for objects and arrays
   const toggleExpand = () => {
-    if (type === 'object' || type === 'array') {
+    if (type === "object" || type === "array") {
       setIsExpanded(!isExpanded);
     }
   };
@@ -42,16 +75,15 @@ const JsonTreeNode: React.FC<JsonTreeNodeProps> = ({
   // TODO: Add logic to render child nodes when expanded
 
   return (
-    <div className="json-node">
+    <div className="json-node" onClick={handleNodeClick}>
+      {/* {name} {content} */}
       {/* Implement your node rendering logic here */}
       <div className="node-header" onClick={toggleExpand}>
+        {name}
         {/* Implement expand/collapse icons and node labeling */}
       </div>
-
       {/* Render children when expanded */}
-      {isExpanded && (
-        <div className="node-children">{/* Render child nodes here */}</div>
-      )}
+      {isExpanded && <div className="node-children">{content}</div>}
     </div>
   );
 };

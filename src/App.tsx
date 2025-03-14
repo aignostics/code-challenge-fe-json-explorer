@@ -1,6 +1,6 @@
-import './App.css';
-import JsonExplorer from './components/JsonExplorer';
-import { sampleData } from './assets/data/sampleData';
+import "./App.css";
+import JsonExplorer from "./components/JsonExplorer";
+import { sampleData } from "./assets/data/sampleData";
 
 function App() {
   return (
