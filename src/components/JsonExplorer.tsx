@@ -11,6 +11,8 @@ const JsonExplorer: React.FC<JsonExplorerProps> = ({ data }) => {
   const [selectedValue, setSelectedValue] = useState<JsonValue | null>(null);
   const [selectedType, setSelectedType] = useState<string | null>(null);
 
+  const [searchString, setSearchString] = useState("");
+
   const handleNodeClick = (path: string, value: JsonValue, type: string) => {
     setSelectedPath(path);
     setSelectedValue(value);
@@ -33,6 +35,7 @@ const JsonExplorer: React.FC<JsonExplorerProps> = ({ data }) => {
           data={data}
           name="root"
           path="$"
+          selectedPath={selectedPath}
           onNodeClick={handleNodeClick}
         />
       </div>
@@ -61,6 +64,9 @@ const JsonExplorer: React.FC<JsonExplorerProps> = ({ data }) => {
               )}
           </>
         )}
+
+        <input placeholder="Enter node/value..." />
+        <button>Search</button>
       </div>
     </div>
   );

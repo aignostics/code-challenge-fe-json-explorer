@@ -6,6 +6,7 @@ interface JsonTreeNodeProps {
   name: string;
   path: string;
   onNodeClick: (path: string, value: JsonValue, type: string) => void;
+  selectedPath: string | null;
 }
 
 const JsonTreeNode: React.FC<JsonTreeNodeProps> = ({
@@ -13,6 +14,7 @@ const JsonTreeNode: React.FC<JsonTreeNodeProps> = ({
   name,
   path,
   onNodeClick,
+  selectedPath,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -38,6 +40,7 @@ const JsonTreeNode: React.FC<JsonTreeNodeProps> = ({
             path={`${path}/${key}`}
             key={key}
             onNodeClick={onNodeClick}
+            selectedPath={selectedPath}
           />
         ));
       }
@@ -51,6 +54,7 @@ const JsonTreeNode: React.FC<JsonTreeNodeProps> = ({
           path={`${path}/[${index}]`}
           key={index}
           onNodeClick={onNodeClick}
+          selectedPath={selectedPath}
         />
       ));
     }
@@ -66,6 +70,7 @@ const JsonTreeNode: React.FC<JsonTreeNodeProps> = ({
         path={`${path}/${key}`}
         key={key}
         onNodeClick={onNodeClick}
+        selectedPath={selectedPath}
       />
     ));
   }
@@ -83,10 +88,19 @@ const JsonTreeNode: React.FC<JsonTreeNodeProps> = ({
     onNodeClick(path, data, type);
   };
 
+  console.log(selectedPath);
+
+  if (path === selectedPath) {
+    console.log("Selected node!");
+  }
+
   return (
-    <div className="json-node" onClick={handleNodeClick}>
+    <div
+      className={`json-node ${path === selectedPath ? "selected-node" : ""}`}
+      onClick={handleNodeClick}
+    >
       {/* Implement your node rendering logic here */}
-      <div className="node-header" onClick={toggleExpand}>
+      <div className="node-header " onClick={toggleExpand}>
         {(type === "array" || type === "object") && (isExpanded ? "▲" : "▼")}{" "}
         {name}
         {/* Implement expand/collapse icons and node labeling */}

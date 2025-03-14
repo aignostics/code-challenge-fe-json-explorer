@@ -2,18 +2,12 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
 header {
   margin-bottom: 20px;
-}
-
-main {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 20px;
 }
 
 .explorer-container {
@@ -34,14 +28,30 @@ code {
   background-color: #f5f5f5;
   padding: 2px 4px;
   border-radius: 3px;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.json-explorer {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.selected-info {
+  margin-left: 16px;
+  padding-left: 16px;
+  border-left: 1px solid rgb(195, 195, 195);
+  min-width: 400px;
+}
+
+.tree-container {
+  width: 500px;
 }
 
 /* src/components/JsonTreeNode.css */
 .json-node {
   font-family: monospace;
   margin: 2px 0;
-  padding-left: 1.2em;
+  padding: 0 1.2em;
 }
 
 .node-header {
@@ -115,12 +125,13 @@ code {
 .selected-node {
   background-color: #e6f7ff;
   border-radius: 2px;
+  color: black;
 }
 
 /* Info panel styling */
 .path-display code {
   word-break: break-all;
-  color: #000000
+  color: #000000;
 }
 
 .type-display span {
