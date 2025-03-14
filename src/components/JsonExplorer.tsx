@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { JsonValue } from '../types';
-import JsonTreeNode from './JsonTreeNode';
+import { useRef, useState } from "react";
+import { JsonValue } from "../types";
+import JsonTreeNode from "./JsonTreeNode";
 
 interface JsonExplorerProps {
   data: JsonValue;
@@ -11,6 +11,9 @@ const JsonExplorer: React.FC<JsonExplorerProps> = ({ data }) => {
   const [selectedValue, setSelectedValue] = useState<JsonValue | null>(null);
   const [selectedType, setSelectedType] = useState<string | null>(null);
 
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const [searchString, setSearchString] = useState<string | null>(null);
+
   const handleNodeClick = (path: string, value: JsonValue, type: string) => {
     setSelectedPath(path);
     setSelectedValue(value);
@@ -19,11 +22,15 @@ const JsonExplorer: React.FC<JsonExplorerProps> = ({ data }) => {
 
   // Helper to safely display values as strings
   const displayValue = (value: JsonValue | null): string => {
-    if (value === null) return 'null';
-    if (typeof value === 'object') {
+    if (value === null) return "null";
+    if (typeof value === "object") {
       return JSON.stringify(value, null, 2);
     }
     return String(value);
+  };
+
+  const onSearchStringChange = () => {
+    setSearchString(searchInputRef.current?.value || null);
   };
 
   return (
@@ -33,7 +40,9 @@ const JsonExplorer: React.FC<JsonExplorerProps> = ({ data }) => {
           data={data}
           name="root"
           path="$"
+          selectedPath={selectedPath}
           onNodeClick={handleNodeClick}
+          searchString={searchString}
         />
       </div>
 
@@ -51,14 +60,23 @@ const JsonExplorer: React.FC<JsonExplorerProps> = ({ data }) => {
               </p>
             </div>
             {selectedValue !== undefined &&
-              selectedType !== 'object' &&
-              selectedType !== 'array' && (
+              selectedType !== "object" &&
+              selectedType !== "array" && (
                 <div className="value-display">
-                  <pre>{displayValue(selectedValue)}</pre>
+                  <pre className={`value-${selectedType}`}>
+                    {displayValue(selectedValue)}
+                  </pre>
                 </div>
               )}
           </>
         )}
+
+        <input
+          ref={searchInputRef}
+          onChange={onSearchStringChange}
+          placeholder="Enter node/value..."
+        />
+        <button>Search</button>
       </div>
     </div>
   );
