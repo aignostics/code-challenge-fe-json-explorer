@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { JsonValue } from "../types";
 import JsonTreeNode from "./JsonTreeNode";
 
@@ -11,7 +11,8 @@ const JsonExplorer: React.FC<JsonExplorerProps> = ({ data }) => {
   const [selectedValue, setSelectedValue] = useState<JsonValue | null>(null);
   const [selectedType, setSelectedType] = useState<string | null>(null);
 
-  const [searchString, setSearchString] = useState("");
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const [searchString, setSearchString] = useState<string | null>(null);
 
   const handleNodeClick = (path: string, value: JsonValue, type: string) => {
     setSelectedPath(path);
@@ -28,6 +29,10 @@ const JsonExplorer: React.FC<JsonExplorerProps> = ({ data }) => {
     return String(value);
   };
 
+  const onSearchStringChange = () => {
+    setSearchString(searchInputRef.current?.value || null);
+  };
+
   return (
     <div className="json-explorer">
       <div className="tree-container">
@@ -37,6 +42,7 @@ const JsonExplorer: React.FC<JsonExplorerProps> = ({ data }) => {
           path="$"
           selectedPath={selectedPath}
           onNodeClick={handleNodeClick}
+          searchString={searchString}
         />
       </div>
 
@@ -65,7 +71,11 @@ const JsonExplorer: React.FC<JsonExplorerProps> = ({ data }) => {
           </>
         )}
 
-        <input placeholder="Enter node/value..." />
+        <input
+          ref={searchInputRef}
+          onChange={onSearchStringChange}
+          placeholder="Enter node/value..."
+        />
         <button>Search</button>
       </div>
     </div>

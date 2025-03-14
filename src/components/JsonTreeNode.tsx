@@ -7,6 +7,7 @@ interface JsonTreeNodeProps {
   path: string;
   onNodeClick: (path: string, value: JsonValue, type: string) => void;
   selectedPath: string | null;
+  searchString: string | null;
 }
 
 const JsonTreeNode: React.FC<JsonTreeNodeProps> = ({
@@ -15,6 +16,7 @@ const JsonTreeNode: React.FC<JsonTreeNodeProps> = ({
   path,
   onNodeClick,
   selectedPath,
+  searchString,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -41,6 +43,7 @@ const JsonTreeNode: React.FC<JsonTreeNodeProps> = ({
             key={key}
             onNodeClick={onNodeClick}
             selectedPath={selectedPath}
+            searchString={searchString}
           />
         ));
       }
@@ -55,6 +58,7 @@ const JsonTreeNode: React.FC<JsonTreeNodeProps> = ({
           key={index}
           onNodeClick={onNodeClick}
           selectedPath={selectedPath}
+          searchString={searchString}
         />
       ));
     }
@@ -71,6 +75,7 @@ const JsonTreeNode: React.FC<JsonTreeNodeProps> = ({
         key={key}
         onNodeClick={onNodeClick}
         selectedPath={selectedPath}
+        searchString={searchString}
       />
     ));
   }
@@ -94,9 +99,17 @@ const JsonTreeNode: React.FC<JsonTreeNodeProps> = ({
     console.log("Selected node!");
   }
 
+  // TODO: Handle other value types for searching
+  const isHighlighted =
+    searchString &&
+    (name.search(searchString) !== -1 ||
+      (type === "string" && (data as string).search(searchString) !== -1));
+
   return (
     <div
-      className={`json-node ${path === selectedPath ? "selected-node" : ""}`}
+      className={`json-node ${path === selectedPath ? "selected-node" : ""} ${
+        isHighlighted ? "highlight-node" : ""
+      }`}
       onClick={handleNodeClick}
     >
       {/* Implement your node rendering logic here */}
