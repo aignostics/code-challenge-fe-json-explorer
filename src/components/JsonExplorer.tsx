@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { JsonValue } from "../types";
 import JsonTreeNode from "./JsonTreeNode";
 
