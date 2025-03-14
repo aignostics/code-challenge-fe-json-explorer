@@ -25,37 +25,49 @@ const JsonTreeNode: React.FC<JsonTreeNodeProps> = ({
 
   const type = getType(data);
 
-  let content: ReactNode = <></>;
+  let children: ReactNode[] = [];
 
   switch (type) {
-    case "null":
-      content = <div>Null</div>;
-      break;
-    case "array":
-      content = <div>Array</div>;
-      break;
-
     case "object":
       {
         const dataObject = data as { [key: string]: JsonValue };
-
-        content = (
-          <>
-            {Object.keys(dataObject).map((key) => (
-              <JsonTreeNode
-                data={dataObject[key] || null}
-                name={key}
-                path={`${path}/${key}`}
-                key={key}
-                onNodeClick={onNodeClick}
-              />
-            ))}
-          </>
-        );
+        children = Object.keys(dataObject).map((key) => (
+          <JsonTreeNode
+            data={dataObject[key] || null}
+            name={key}
+            path={`${path}/${key}`}
+            key={key}
+            onNodeClick={onNodeClick}
+          />
+        ));
       }
       break;
-    default:
-      content = <>{data}</>;
+    case "array": {
+      const dataArray = data as JsonValue[];
+      children = dataArray.map((value, index) => (
+        <JsonTreeNode
+          data={value}
+          name={index.toString()}
+          path={`${path}/[${index}]`}
+          key={index}
+          onNodeClick={onNodeClick}
+        />
+      ));
+    }
+  }
+
+  if (type === "object") {
+    const dataObject = data as { [key: string]: JsonValue };
+
+    children = Object.keys(dataObject).map((key) => (
+      <JsonTreeNode
+        data={dataObject[key] || null}
+        name={key}
+        path={`${path}/${key}`}
+        key={key}
+        onNodeClick={onNodeClick}
+      />
+    ));
   }
 
   // Toggle expand/collapse for objects and arrays
@@ -71,19 +83,16 @@ const JsonTreeNode: React.FC<JsonTreeNodeProps> = ({
     onNodeClick(path, data, type);
   };
 
-  // TODO: Implement rendering for different data types
-  // TODO: Add logic to render child nodes when expanded
-
   return (
     <div className="json-node" onClick={handleNodeClick}>
-      {/* {name} {content} */}
       {/* Implement your node rendering logic here */}
       <div className="node-header" onClick={toggleExpand}>
+        {(type === "array" || type === "object") && (isExpanded ? "▲" : "▼")}{" "}
         {name}
         {/* Implement expand/collapse icons and node labeling */}
       </div>
       {/* Render children when expanded */}
-      {isExpanded && <div className="node-children">{content}</div>}
+      {isExpanded && <div className="node-children">{children}</div>}
     </div>
   );
 };

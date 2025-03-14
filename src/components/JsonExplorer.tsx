@@ -54,7 +54,9 @@ const JsonExplorer: React.FC<JsonExplorerProps> = ({ data }) => {
               selectedType !== "object" &&
               selectedType !== "array" && (
                 <div className="value-display">
-                  <pre>{displayValue(selectedValue)}</pre>
+                  <pre className={`value-${selectedType}`}>
+                    {displayValue(selectedValue)}
+                  </pre>
                 </div>
               )}
           </>
